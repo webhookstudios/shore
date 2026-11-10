@@ -4,6 +4,22 @@ Restyle the Ubuntu dock. Pick a preset, then change anything: where the dock sit
 
 Spur does not replace the dock. It drives the dock that Ubuntu already ships (`ubuntu-dock@ubuntu.com`) and adds styling, magnification, widgets and hiding on top, so pinned apps, window previews and drag and drop keep working as before.
 
+![The ten built-in presets](docs/screenshots/presets.png)
+
+The ten built-in presets, applied to a bare desktop.
+
+| | |
+|---|---|
+| ![Presets page](docs/screenshots/settings-presets.png) | ![Layout page](docs/screenshots/settings-layout.png) |
+| ![Look page](docs/screenshots/settings-look.png) | ![Icons page](docs/screenshots/settings-icons.png) |
+| ![Widgets page](docs/screenshots/settings-widgets.png) | ![Hiding page](docs/screenshots/settings-hiding.png) |
+
+![Widgets in a full-width dock](docs/screenshots/widgets.png)
+
+![Icons growing under the pointer](docs/screenshots/magnification.png)
+
+The screenshots were taken in a test session on Ubuntu 26.04 with GNOME Shell 50.1.
+
 ## Requirements
 
 - Ubuntu 26.04 with GNOME Shell 50
