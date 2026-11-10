@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.spur"
+          path="/org/gnome/shell/extensions/spur/">
+
+    <!-- General -->
+    <key name="enabled" type="b">
+      <default><![CDATA[true]]></default>
+      <summary>Let Dock Manager control the Ubuntu dock</summary>
+    </key>
+    <key name="hidden" type="b">
+      <default><![CDATA[false]]></default>
+      <summary>Hide the dock completely</summary>
+    </key>
+    <key name="toggle-shortcut" type="as">
+      <default><![CDATA[['<Super><Alt>d']]]></default>
+      <summary>Shortcut that hides or shows the dock</summary>
+    </key>
+    <key name="current-preset" type="s">
+      <default><![CDATA['ubuntu']]></default>
+      <summary>Id of the preset applied last</summary>
+    </key>
+    <key name="user-presets" type="s">
+      <default><![CDATA['{}']]></default>
+      <summary>Presets saved by the user, as JSON</summary>
+    </key>
+
+    <!-- Layout -->
+    <key name="position" type="s">
+      <default><![CDATA['BOTTOM']]></default>
+      <choices><choice value="BOTTOM"/><choice value="LEFT"/><choice value="RIGHT"/><choice value="TOP"/></choices>
+      <summary>Screen edge of the dock</summary>
+    </key>
+    <key name="reserve-space" type="b">
+      <default><![CDATA[false]]></default>
+      <summary>Reserve screen space so windows never go under the dock</summary>
+    </key>
+    <key name="extend" type="b">
+      <default><![CDATA[false]]></default>
+      <summary>Stretch the dock along the whole screen edge</summary>
+    </key>
+    <key name="length" type="i">
+      <default><![CDATA[90]]></default>
+      <range min="20" max="100"/>
+      <summary>Dock length in percent of the screen edge (not stretched)</summary>
+    </key>
+    <key name="all-monitors" type="b">
+      <default><![CDATA[false]]></default>
+      <summary>Show a dock on every monitor</summary>
+    </key>
+    <key name="icon-size" type="i">
+      <default><![CDATA[42]]></default>
+      <range min="16" max="128"/>
+      <summary>Icon size in pixels</summary>
+    </key>
+    <key name="icon-spacing" type="i">
+      <default><![CDATA[4]]></default>
+      <range min="0" max="40"/>
+      <summary>Space between icons in pixels</summary>
+    </key>
+    <key name="padding" type="i">
+      <default><![CDATA[6]]></default>
+      <range min="0" max="40"/>
+      <summary>Space between the icons and the edge of the dock</summary>
+    </key>
+    <key name="radius" type="i">
+      <default><![CDATA[24]]></default>
+      <range min="0" max="80"/>
+      <summary>Corner radius of the dock</summary>
+    </key>
+    <key name="edge-gap" type="i">
+      <default><![CDATA[4]]></default>
+      <range min="0" max="120"/>
+      <summary>Gap between the dock and the screen edge</summary>
+    </key>
+    <key name="side-gap" type="i">
+      <default><![CDATA[0]]></default>
+      <range min="0" max="600"/>
+      <summary>Gap at both ends of a stretched dock</summary>
+    </key>
+    <key name="align" type="s">
+      <default><![CDATA['center']]></default>
+      <choices><choice value="center"/><choice value="start"/></choices>
+      <summary>Icon alignment in a stretched dock</summary>
+    </key>
+
+    <!-- Look -->
+    <key name="bg-color" type="s">
+      <default><![CDATA['#241f31']]></default>
+      <summary>Background color</summary>
+    </key>
+    <key name="bg-opacity" type="d">
+      <default><![CDATA[0.6]]></default>
+      <range min="0.0" max="1.0"/>
+      <summary>Background opacity</summary>
+    </key>
+    <key name="transparency" type="s">
+      <default><![CDATA['FIXED']]></default>
+      <choices><choice value="FIXED"/><choice value="DYNAMIC"/></choices>
+      <summary>Fixed, or more solid when windows come near</summary>
+    </key>
+    <key name="bg-opacity-near" type="d">
+      <default><![CDATA[0.9]]></default>
+      <range min="0.0" max="1.0"/>
+      <summary>Background opacity when windows are near (dynamic only)</summary>
+    </key>
+    <key name="blur" type="b">
+      <default><![CDATA[false]]></default>
+      <summary>Blur what is behind the dock</summary>
+    </key>
+    <key name="blur-strength" type="i">
+      <default><![CDATA[30]]></default>
+      <range min="1" max="100"/>
+      <summary>How strong the blur is</summary>
+    </key>
+    <key name="border-width" type="i">
+      <default><![CDATA[0]]></default>
+      <range min="0" max="8"/>
+      <summary>Border width</summary>
+    </key>
+    <key name="border-color" type="s">
+      <default><![CDATA['#ffffff']]></default>
+      <summary>Border color</summary>
+    </key>
+    <key name="border-opacity" type="d">
+      <default><![CDATA[0.15]]></default>
+      <range min="0.0" max="1.0"/>
+      <summary>Border opacity</summary>
+    </key>
+    <key name="shadow" type="b">
+      <default><![CDATA[false]]></default>
+      <summary>Draw a shadow under the dock</summary>
+    </key>
+    <key name="shadow-blur" type="i">
+      <default><![CDATA[24]]></default>
+      <range min="0" max="80"/>
+      <summary>Shadow blur</summary>
+    </key>
+    <key name="shadow-offset" type="i">
+      <default><![CDATA[4]]></default>
+      <range min="-30" max="30"/>
+      <summary>Shadow offset away from the screen edge</summary>
+    </key>
+    <key name="shadow-color" type="s">
+      <default><![CDATA['#000000']]></default>
+      <summary>Shadow color</summary>
+    </key>
+    <key name="shadow-opacity" type="d">
+      <default><![CDATA[0.4]]></default>
+      <range min="0.0" max="1.0"/>
+      <summary>Shadow opacity</summary>
+    </key>
+    <key name="highlight-radius" type="i">
+      <default><![CDATA[12]]></default>
+      <range min="0" max="50"/>
+      <summary>Corner radius of the highlight behind an icon</summary>
+    </key>
+    <key name="highlight-color" type="s">
+      <default><![CDATA['#eeeeee']]></default>
+      <summary>Color of the highlight behind hovered and active icons</summary>
+    </key>
+    <key name="highlight-opacity" type="d">
+      <default><![CDATA[0.2]]></default>
+      <range min="0.0" max="1.0"/>
+      <summary>Opacity of that highlight</summary>
+    </key>
+
+    <!-- Running indicators -->
+    <key name="indicator-style" type="s">
+      <default><![CDATA['DOTS']]></default>
+      <choices><choice value="DEFAULT"/><choice value="DOTS"/><choice value="SQUARES"/><choice value="DASHES"/><choice value="SEGMENTED"/><choice value="SOLID"/><choice value="CILIORA"/><choice value="METRO"/><choice value="BINARY"/><choice value="DOT"/></choices>
+      <summary>Style of the running-app indicator</summary>
+    </key>
+    <key name="indicator-color-mode" type="s">
+      <default><![CDATA['theme']]></default>
+      <choices><choice value="theme"/><choice value="custom"/><choice value="dominant"/></choices>
+      <summary>Where the indicator color comes from</summary>
+    </key>
+    <key name="indicator-color" type="s">
+      <default><![CDATA['#ffffff']]></default>
+      <summary>Indicator color</summary>
+    </key>
+    <key name="indicator-border-width" type="i">
+      <default><![CDATA[0]]></default>
+      <range min="0" max="6"/>
+      <summary>Indicator border width</summary>
+    </key>
+    <key name="indicator-border-color" type="s">
+      <default><![CDATA['#ffffff']]></default>
+      <summary>Indicator border color</summary>
+    </key>
+
+    <!-- Items -->
+    <key name="show-apps-button" type="b">
+      <default><![CDATA[true]]></default>
+      <summary>Show the corner (apps) button</summary>
+    </key>
+    <key name="apps-at-edge" type="b">
+      <default><![CDATA[true]]></default>
+      <summary>Keep the corner button at the end of a stretched dock instead of with the icons</summary>
+    </key>
+    <key name="apps-position" type="s">
+      <default><![CDATA['end']]></default>
+      <choices><choice value="start"/><choice value="end"/></choices>
+      <summary>Corner button at the start or end of the dock</summary>
+    </key>
+    <key name="apps-icon" type="s">
+      <default><![CDATA['default']]></default>
+      <choices><choice value="default"/><choice value="hexagon"/><choice value="flower"/><choice value="spark"/><choice value="orbit"/><choice value="peak"/><choice value="diamond"/><choice value="drop"/><choice value="bars"/><choice value="custom"/></choices>
+      <summary>Logo of the corner button</summary>
+    </key>
+    <key name="apps-icon-path" type="s">
+      <default><![CDATA['']]></default>
+      <summary>Image file for a custom corner button logo</summary>
+    </key>
+    <key name="apps-accent" type="b">
+      <default><![CDATA[false]]></default>
+      <summary>Color the corner button</summary>
+    </key>
+    <key name="apps-accent-color" type="s">
+      <default><![CDATA['#0078d4']]></default>
+      <summary>Color of the corner button</summary>
+    </key>
+    <key name="show-trash" type="b">
+      <default><![CDATA[true]]></default>
+      <summary>Show the Trash</summary>
+    </key>
+    <key name="show-mounts" type="b">
+      <default><![CDATA[false]]></default>
+      <summary>Show mounted drives</summary>
+    </key>
+    <key name="show-mounts-network" type="b">
+      <default><![CDATA[true]]></default>
+      <summary>Include network drives</summary>
+    </key>
+    <key name="show-favorites" type="b">
+      <default><![CDATA[true]]></default>
+      <summary>Show pinned apps</summary>
+    </key>
+    <key name="show-running" type="b">
+      <default><![CDATA[true]]></default>
+      <summary>Show running apps that are not pinned</summary>
+    </key>
+    <key name="show-previews" type="b">
+      <default><![CDATA[true]]></default>
+      <summary>Show window previews</summary>
+    </key>
+    <key name="isolate-workspaces" type="b">
+      <default><![CDATA[false]]></default>
+      <summary>Only show apps of the current workspace</summary>
+    </key>
+    <key name="isolate-monitors" type="b">
+      <default><![CDATA[false]]></default>
+      <summary>Only show apps of the monitor</summary>
+    </key>
+    <key name="click-action" type="s">
+      <default><![CDATA['focus-or-appspread']]></default>
+      <choices><choice value="skip"/><choice value="minimize"/><choice value="launch"/><choice value="cycle-windows"/><choice value="minimize-or-overview"/><choice value="previews"/><choice value="minimize-or-previews"/><choice value="focus-or-previews"/><choice value="focus-or-appspread"/><choice value="focus-minimize-or-previews"/><choice value="focus-minimize-or-appspread"/><choice value="quit"/></choices>
+      <summary>What clicking a running app does</summary>
+    </key>
+
+    <!-- Magnification -->
+    <key name="magnify" type="b">
+      <default><![CDATA[false]]></default>
+      <summary>Enlarge icons near the pointer</summary>
+    </key>
+    <key name="magnify-scale" type="d">
+      <default><![CDATA[1.6]]></default>
+      <range min="1.0" max="3.0"/>
+      <summary>How much the icon under the pointer grows</summary>
+    </key>
+    <key name="magnify-range" type="d">
+      <default><![CDATA[2.0]]></default>
+      <range min="0.5" max="6.0"/>
+      <summary>How many icons around the pointer grow</summary>
+    </key>
+
+    <!-- Widgets -->
+    <key name="widget-clock" type="b">
+      <default><![CDATA[false]]></default>
+      <summary>Show the time in the dock</summary>
+    </key>
+    <key name="widget-date" type="b">
+      <default><![CDATA[false]]></default>
+      <summary>Show the date in the dock</summary>
+    </key>
+    <key name="widget-weather" type="b">
+      <default><![CDATA[false]]></default>
+      <summary>Show the weather in the dock</summary>
+    </key>
+    <key name="widget-cpu-usage" type="b">
+      <default><![CDATA[false]]></default>
+      <summary>Show CPU usage in the dock</summary>
+    </key>
+    <key name="widget-cpu-temp" type="b">
+      <default><![CDATA[false]]></default>
+      <summary>Show CPU temperature in the dock</summary>
+    </key>
+    <key name="widget-memory" type="b">
+      <default><![CDATA[false]]></default>
+      <summary>Show memory use in the dock</summary>
+    </key>
+    <key name="widget-network" type="b">
+      <default><![CDATA[false]]></default>
+      <summary>Show network speed in the dock</summary>
+    </key>
+    <key name="widgets-position" type="s">
+      <default><![CDATA['end']]></default>
+      <choices><choice value="start"/><choice value="end"/></choices>
+      <summary>Widgets at the start or end of the dock</summary>
+    </key>
+    <key name="widgets-clock-24h" type="b">
+      <default><![CDATA[true]]></default>
+      <summary>Show the clock in 24-hour time</summary>
+    </key>
+    <key name="widgets-temp-unit" type="s">
+      <default><![CDATA['C']]></default>
+      <choices><choice value="C"/><choice value="F"/></choices>
+      <summary>Temperature unit</summary>
+    </key>
+    <key name="widgets-text-color" type="s">
+      <default><![CDATA['#ffffff']]></default>
+      <summary>Widget text color</summary>
+    </key>
+    <key name="widgets-font" type="s">
+      <default><![CDATA['']]></default>
+      <summary>Widget font family, empty for the system font</summary>
+    </key>
+    <key name="widgets-font-size" type="i">
+      <default><![CDATA[12]]></default>
+      <range min="8" max="24"/>
+      <summary>Widget text size in points</summary>
+    </key>
+    <key name="weather-place" type="s">
+      <default><![CDATA['']]></default>
+      <summary>Name of the weather location</summary>
+    </key>
+    <key name="weather-lat" type="d">
+      <default><![CDATA[0.0]]></default>
+      <range min="-90.0" max="90.0"/>
+      <summary>Weather location latitude</summary>
+    </key>
+    <key name="weather-lon" type="d">
+      <default><![CDATA[0.0]]></default>
+      <range min="-180.0" max="180.0"/>
+      <summary>Weather location longitude</summary>
+    </key>
+
+    <!-- Hiding -->
+    <key name="autohide" type="b">
+      <default><![CDATA[true]]></default>
+      <summary>Hide the dock when not in use</summary>
+    </key>
+    <key name="intellihide" type="b">
+      <default><![CDATA[true]]></default>
+      <summary>Only hide when a window is in the way</summary>
+    </key>
+    <key name="intellihide-mode" type="s">
+      <default><![CDATA['ALL_WINDOWS']]></default>
+      <choices><choice value="ALL_WINDOWS"/><choice value="FOCUS_APPLICATION_WINDOWS"/><choice value="MAXIMIZED_WINDOWS"/><choice value="ALWAYS_ON_TOP"/></choices>
+      <summary>Which windows count as in the way</summary>
+    </key>
+    <key name="autohide-fullscreen" type="b">
+      <default><![CDATA[false]]></default>
+      <summary>Hide the dock in full screen</summary>
+    </key>
+    <key name="require-pressure" type="b">
+      <default><![CDATA[true]]></default>
+      <summary>Push the pointer against the edge to reveal the dock</summary>
+    </key>
+    <key name="show-delay" type="d">
+      <default><![CDATA[0.25]]></default>
+      <range min="0.0" max="2.0"/>
+      <summary>Seconds before the dock appears</summary>
+    </key>
+    <key name="hide-delay" type="d">
+      <default><![CDATA[0.2]]></default>
+      <range min="0.0" max="2.0"/>
+      <summary>Seconds before the dock hides</summary>
+    </key>
+    <key name="animation-time" type="d">
+      <default><![CDATA[0.2]]></default>
+      <range min="0.05" max="1.0"/>
+      <summary>Seconds the hide and reveal animation lasts</summary>
+    </key>
+  </schema>
+</schemalist>

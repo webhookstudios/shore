@@ -1,0 +1,9 @@
+{
+  "uuid": "spur@webhookstudios.github.io",
+  "name": "Spur",
+  "description": "Restyle the Ubuntu dock: presets like floating, taskbar and glass, plus detailed control over position, size, colors, blur, indicators and hiding.",
+  "version-name": "1.0.0",
+  "shell-version": ["50"],
+  "settings-schema": "org.gnome.shell.extensions.spur",
+  "url": "https://github.com/webhookstudios/spur"
+}

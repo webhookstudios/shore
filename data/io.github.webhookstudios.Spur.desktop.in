@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Spur
+GenericName=Dock Settings
+Comment=Change how the dock looks, where it sits and when it hides
+Exec=@EXEC@
+Icon=@ICON@
+Terminal=false
+StartupNotify=false
+Categories=Settings;GNOME;GTK;
+Keywords=dock;taskbar;panel;launcher;theme;extension;

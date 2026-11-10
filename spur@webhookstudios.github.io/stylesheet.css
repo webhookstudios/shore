@@ -1,0 +1,2 @@
+/* Spur builds its real stylesheet at run time from the settings
+ * (see css.js). This file only has the rules that never change. */
