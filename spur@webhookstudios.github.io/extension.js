@@ -308,7 +308,7 @@ class DockDecor {
         }
         if (shadow) {
             const s = this._settings;
-            const room = s.get_int('shadow-blur') + Math.abs(s.get_int('shadow-offset')) + 2;
+            const room = Math.ceil(s.get_int('shadow-blur') / 2) + Math.abs(s.get_int('shadow-offset')) + 2;
             const changed = this._shadowShape?.width !== shape.width ||
                 this._shadowShape?.height !== shape.height || this._shadowShape?.radius !== shape.radius;
             this._shadowShape = shape;
@@ -370,11 +370,15 @@ class DockDecor {
         cr.setFillRule(Cairo.FillRule.WINDING);
 
         // Stacked, ever larger outlines fade the shadow out with distance.
-        const steps = Math.max(1, Math.min(24, blur));
+        // The "blur" setting is the full width of the soft edge, but the
+        // outer part is nearly invisible, so the rings stop at half of it and
+        // are spaced to fall off smoothly.
+        const reach = blur / 2;
+        const steps = Math.max(1, Math.min(24, Math.round(reach)));
         const alpha = 1 - Math.pow(1 - Math.min(0.98, strength), 1 / steps);
         cr.setSourceRGBA(r / 255, g / 255, b / 255, alpha);
         for (let i = 1; i <= steps; i++) {
-            const grow = blur * i / steps;
+            const grow = reach * Math.pow(i / steps, 0.65);
             rounded(room + dx - grow, room + dy - grow,
                 shape.width + 2 * grow, shape.height + 2 * grow, shape.radius + grow);
             cr.fill();

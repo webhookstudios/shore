@@ -132,9 +132,9 @@
       <summary>Draw a shadow under the dock</summary>
     </key>
     <key name="shadow-blur" type="i">
-      <default><![CDATA[24]]></default>
+      <default><![CDATA[16]]></default>
       <range min="0" max="80"/>
-      <summary>Shadow blur</summary>
+      <summary>Shadow softness</summary>
     </key>
     <key name="shadow-offset" type="i">
       <default><![CDATA[4]]></default>

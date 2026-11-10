@@ -185,7 +185,7 @@ export function drawDock(cr, width, height, get, {focus = false} = {}) {
         const [dx, dy] = {BOTTOM: [0, -offset], TOP: [0, offset], LEFT: [offset, 0], RIGHT: [-offset, 0]}[L.pos];
         const steps = 8;
         for (let i = steps; i >= 1; i--) {
-            const grow = blur * i / steps / 2;
+            const grow = blur / 2 * Math.pow(i / steps, 0.65);
             color(cr, get('shadow-color'), get('shadow-opacity') / steps * 0.9);
             roundRect(cr, x + dx - grow, y + dy - grow, w + 2 * grow, h + 2 * grow, radius + grow);
             cr.fill();
