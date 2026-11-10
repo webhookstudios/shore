@@ -97,7 +97,7 @@ The preview at the top of the window follows every change. The left side shows t
 |---|---|
 | Presets | Apply, save, import and export presets, turn Spur off, restore the stock dock settings |
 | Layout | Screen edge, when the dock shows, stretching, length, icon alignment, icon size, spacing, padding, floating gap, corner radius, one dock per monitor |
-| Look | Background color and opacity, dynamic transparency, frosted glass, border, shadow, icon highlight |
+| Look | Background color and opacity, dynamic transparency, frosted glass, border, icon highlight |
 | Icons | Corner button logo, position and color, running-app indicators, Trash, drives, pinned and running apps, window previews, click action, magnification |
 | Widgets | Time, date, weather, CPU usage, CPU temperature, memory use and network speed inside the dock, with your choice of font, size and color |
 | Hiding | Hide completely with a shortcut; show always, on top of windows, until a window touches it, or only at the edge; reveal and hide delays, animation time |

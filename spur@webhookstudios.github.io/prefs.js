@@ -553,19 +553,6 @@ function lookPage(settings) {
     border.add(sliderRow(settings, 'border-opacity', 'Opacity'));
     page.add(border);
 
-    const shadow = new Adw.PreferencesGroup({title: 'Shadow'});
-    shadow.add(switchRow(settings, 'shadow', 'Shadow'));
-    for (const row of [
-        spinRow(settings, 'shadow-blur', 'Blur', 'Pixels', 2),
-        spinRow(settings, 'shadow-offset', 'Offset', 'Pixels away from the screen edge', 1),
-        colorRow(settings, 'shadow-color', 'Color'),
-        sliderRow(settings, 'shadow-opacity', 'Opacity'),
-    ]) {
-        dependsOn(settings, row, () => settings.get_boolean('shadow'));
-        shadow.add(row);
-    }
-    page.add(shadow);
-
     const highlight = new Adw.PreferencesGroup({
         title: 'Icon highlight', description: 'Behind hovered and active icons.',
     });

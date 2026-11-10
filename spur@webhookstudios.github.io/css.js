@@ -53,8 +53,8 @@ export function buildCss(v) {
     }
     background.push(`border-width: ${borderWidth}px;`);
     background.push(`border-style: solid;`);
-    // The shadow is drawn by the extension under the dock: one made here
-    // would be cut off square at the dock's own edges.
+    // No shadow: the dock draws into a buffer that ends at its own edges,
+    // so a shadow would be cut off square.
     background.push('box-shadow: none;');
     add('#dash .dash-background', background);
 

@@ -179,19 +179,6 @@ export function drawDock(cr, width, height, get, {focus = false} = {}) {
     const radius = get('radius');
     cr.pushGroup();
 
-    if (get('shadow')) {
-        const blur = get('shadow-blur');
-        const offset = get('shadow-offset');
-        const [dx, dy] = {BOTTOM: [0, -offset], TOP: [0, offset], LEFT: [offset, 0], RIGHT: [-offset, 0]}[L.pos];
-        const steps = 8;
-        for (let i = steps; i >= 1; i--) {
-            const grow = blur / 2 * Math.pow(i / steps, 0.65);
-            color(cr, get('shadow-color'), get('shadow-opacity') / steps * 0.9);
-            roundRect(cr, x + dx - grow, y + dy - grow, w + 2 * grow, h + 2 * grow, radius + grow);
-            cr.fill();
-        }
-    }
-
     // Background and border.
     roundRect(cr, x, y, w, h, radius);
     color(cr, get('bg-color'), get('bg-opacity'));

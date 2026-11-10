@@ -1,5 +1,4 @@
 import Clutter from 'gi://Clutter';
-import Cairo from 'cairo';
 import Cogl from 'gi://Cogl';
 import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
@@ -26,11 +25,6 @@ const PIVOT = {
     LEFT: [0.0, 0.5],
     RIGHT: [1.0, 0.5],
 };
-
-function hexToRgb(hex) {
-    const m = /^#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})/i.exec(hex ?? '');
-    return m ? [parseInt(m[1], 16), parseInt(m[2], 16), parseInt(m[3], 16)] : [0, 0, 0];
-}
 
 // Cuts an actor to a rounded rectangle. Clutter can only clip to plain
 // rectangles, so this fades out everything outside the rounded shape.
@@ -127,45 +121,27 @@ class DockDecor {
             this._resetMagnification(false);
     }
 
-    // Under the dock: frosted glass and shadow ---------------------------------
+    // Under the dock: frosted glass ----------------------------------------------
     //
-    // The dock draws itself into an offscreen buffer that ends at its own
-    // edges. A blur inside it has no desktop to blur, and a shadow is cut off
-    // in a square. So both live in separate actors placed right under the
-    // dock, which follow it around: a blurred copy of the wallpaper cut to
-    // the dock's rounded shape, and a drawn shadow around that shape.
+    // The dock draws itself into an offscreen buffer, so a blur placed inside
+    // it has no desktop to blur and shows as a square. Instead a separate
+    // actor sits right under the dock: a blurred copy of the wallpaper, cut
+    // to the dock's rounded shape, that follows the dock around.
 
     _updateUnder(on) {
         const s = this._settings;
-        const wantBlur = on && s.get_boolean('blur');
-        const wantShadow = on && s.get_boolean('shadow');
-
-        if (!wantBlur)
+        if (!(on && s.get_boolean('blur'))) {
             this._removeBlur();
-        else if (!this._blurHolder)
+            this._unwatchUnder();
+            return;
+        }
+        if (!this._blurHolder)
             this._createBlur();
         if (this._blurEffect)
             this._blurEffect.radius = s.get_int('blur-strength') * 2;
-
-        if (!wantShadow) {
-            this._shadow?.destroy();
-            this._shadow = null;
-        } else if (!this._shadow) {
-            this._shadow = new St.DrawingArea({reactive: false});
-            this._shadow.connect('repaint', area => this._paintShadow(area));
-            // The shell tears the stage down on its own at shutdown.
-            this._shadow.connect('destroy', () => {
-                this._shadow = null;
-            });
-            Main.uiGroup.insert_child_below(this._shadow, this._dock);
-        }
-
-        if (this._blurHolder || this._shadow) {
+        if (this._blurHolder) {
             this._watchUnder();
             this._syncUnder();
-            this._shadow?.queue_repaint();
-        } else {
-            this._unwatchUnder();
         }
     }
 
@@ -284,114 +260,33 @@ class DockDecor {
     _syncUnder() {
         const shape = this._shape();
         const holder = this._blurHolder;
-        const shadow = this._shadow;
+        if (!holder)
+            return;
         if (!shape) {
-            holder?.hide();
-            shadow?.hide();
+            holder.hide();
             return;
         }
-        const dock = this._dock;
-        if (holder) {
-            if (holder.x !== shape.x || holder.y !== shape.y)
-                holder.set_position(shape.x, shape.y);
-            if (holder.width !== shape.width || holder.height !== shape.height)
-                holder.set_size(shape.width, shape.height);
-            // Keep the wallpaper where the real one is, wherever the holder goes.
-            this._blurWallpaper.set_position(
-                this._blurMonitor.x - shape.x, this._blurMonitor.y - shape.y);
-            this._roundEffect.setShape(shape.width, shape.height, shape.radius);
-            if (holder.opacity !== shape.opacity)
-                holder.opacity = shape.opacity;
-            this._stackBelow(holder, dock);
-            if (!holder.visible)
-                holder.show();
-        }
-        if (shadow) {
-            const s = this._settings;
-            const room = Math.ceil(s.get_int('shadow-blur') / 2) + Math.abs(s.get_int('shadow-offset')) + 2;
-            const changed = this._shadowShape?.width !== shape.width ||
-                this._shadowShape?.height !== shape.height || this._shadowShape?.radius !== shape.radius;
-            this._shadowShape = shape;
-            this._shadowRoom = room;
-            if (shadow.x !== shape.x - room || shadow.y !== shape.y - room)
-                shadow.set_position(shape.x - room, shape.y - room);
-            if (shadow.width !== shape.width + 2 * room || shadow.height !== shape.height + 2 * room)
-                shadow.set_size(shape.width + 2 * room, shape.height + 2 * room);
-            if (shadow.opacity !== shape.opacity)
-                shadow.opacity = shape.opacity;
-            this._stackBelow(shadow, holder ?? dock);
-            if (!shadow.visible)
-                shadow.show();
-            if (changed)
-                shadow.queue_repaint();
-        }
-    }
-
-    // Re-stacking always triggers a new layout of the whole stage, which
-    // would call this again, so only do it when the order is really wrong.
-    _stackBelow(actor, sibling) {
-        if (actor.get_next_sibling() !== sibling)
-            Main.uiGroup.set_child_below_sibling(actor, sibling);
-    }
-
-    _paintShadow(area) {
-        const shape = this._shadowShape;
-        const cr = area.get_context();
-        if (!shape) {
-            cr.$dispose();
-            return;
-        }
-        const s = this._settings;
-        const room = this._shadowRoom;
-        const [areaWidth, areaHeight] = area.get_surface_size();
-        const blur = s.get_int('shadow-blur');
-        const offset = s.get_int('shadow-offset');
-        const [dx, dy] = {
-            BOTTOM: [0, -offset], TOP: [0, offset], LEFT: [offset, 0], RIGHT: [-offset, 0],
-        }[s.get_string('position')] ?? [0, 0];
-        const [r, g, b] = hexToRgb(s.get_string('shadow-color'));
-        const strength = s.get_double('shadow-opacity');
-
-        const rounded = (x, y, w, h, radius) => {
-            const rad = Math.max(0, Math.min(radius, w / 2, h / 2));
-            cr.newSubPath();
-            cr.arc(x + w - rad, y + rad, rad, -Math.PI / 2, 0);
-            cr.arc(x + w - rad, y + h - rad, rad, 0, Math.PI / 2);
-            cr.arc(x + rad, y + h - rad, rad, Math.PI / 2, Math.PI);
-            cr.arc(x + rad, y + rad, rad, Math.PI, 1.5 * Math.PI);
-            cr.closePath();
-        };
-
-        // Never draw inside the dock itself, so a see-through dock stays clear.
-        cr.setFillRule(Cairo.FillRule.EVEN_ODD);
-        cr.rectangle(0, 0, areaWidth, areaHeight);
-        rounded(room, room, shape.width, shape.height, shape.radius);
-        cr.clip();
-        cr.setFillRule(Cairo.FillRule.WINDING);
-
-        // Stacked, ever larger outlines fade the shadow out with distance.
-        // The "blur" setting is the full width of the soft edge, but the
-        // outer part is nearly invisible, so the rings stop at half of it and
-        // are spaced to fall off smoothly.
-        const reach = blur / 2;
-        const steps = Math.max(1, Math.min(24, Math.round(reach)));
-        const alpha = 1 - Math.pow(1 - Math.min(0.98, strength), 1 / steps);
-        cr.setSourceRGBA(r / 255, g / 255, b / 255, alpha);
-        for (let i = 1; i <= steps; i++) {
-            const grow = reach * Math.pow(i / steps, 0.65);
-            rounded(room + dx - grow, room + dy - grow,
-                shape.width + 2 * grow, shape.height + 2 * grow, shape.radius + grow);
-            cr.fill();
-        }
-        cr.$dispose();
+        if (holder.x !== shape.x || holder.y !== shape.y)
+            holder.set_position(shape.x, shape.y);
+        if (holder.width !== shape.width || holder.height !== shape.height)
+            holder.set_size(shape.width, shape.height);
+        // Keep the wallpaper where the real one is, wherever the holder goes.
+        this._blurWallpaper.set_position(
+            this._blurMonitor.x - shape.x, this._blurMonitor.y - shape.y);
+        this._roundEffect.setShape(shape.width, shape.height, shape.radius);
+        if (holder.opacity !== shape.opacity)
+            holder.opacity = shape.opacity;
+        // Re-stacking triggers a new layout of the whole stage, which would
+        // call this again, so only do it when the order is really wrong.
+        if (holder.get_next_sibling() !== this._dock)
+            Main.uiGroup.set_child_below_sibling(holder, this._dock);
+        if (!holder.visible)
+            holder.show();
     }
 
     _removeUnder() {
         this._unwatchUnder();
         this._removeBlur();
-        this._shadow?.destroy();
-        this._shadow = null;
-        this._shadowShape = null;
     }
 
     // Corner button logo -------------------------------------------------------

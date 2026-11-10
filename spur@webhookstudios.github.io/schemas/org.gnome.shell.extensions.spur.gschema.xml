@@ -127,29 +127,6 @@
       <range min="0.0" max="1.0"/>
       <summary>Border opacity</summary>
     </key>
-    <key name="shadow" type="b">
-      <default><![CDATA[false]]></default>
-      <summary>Draw a shadow under the dock</summary>
-    </key>
-    <key name="shadow-blur" type="i">
-      <default><![CDATA[16]]></default>
-      <range min="0" max="80"/>
-      <summary>Shadow softness</summary>
-    </key>
-    <key name="shadow-offset" type="i">
-      <default><![CDATA[4]]></default>
-      <range min="-30" max="30"/>
-      <summary>Shadow offset away from the screen edge</summary>
-    </key>
-    <key name="shadow-color" type="s">
-      <default><![CDATA['#000000']]></default>
-      <summary>Shadow color</summary>
-    </key>
-    <key name="shadow-opacity" type="d">
-      <default><![CDATA[0.4]]></default>
-      <range min="0.0" max="1.0"/>
-      <summary>Shadow opacity</summary>
-    </key>
     <key name="highlight-radius" type="i">
       <default><![CDATA[12]]></default>
       <range min="0" max="50"/>
