@@ -2,7 +2,7 @@
 # Builds the release zip in dist/, ready for `gnome-extensions install`.
 set -e
 
-UUID=spur@webhookstudios.github.io
+UUID=shore@webhookstudios.github.io
 ROOT="$(cd "$(dirname "$0")" && pwd)"
 
 mkdir -p "$ROOT/dist"

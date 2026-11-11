@@ -230,7 +230,7 @@ export class Stats {
                 this._weatherTime = GLib.get_monotonic_time() / 1e6;
             } catch (e) {
                 if (!e.matches?.(Gio.IOErrorEnum, Gio.IOErrorEnum.CANCELLED))
-                    console.warn(`Spur: weather request failed: ${e.message}`);
+                    console.warn(`Shore: weather request failed: ${e.message}`);
             }
         });
     }

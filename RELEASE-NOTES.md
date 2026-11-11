@@ -4,10 +4,12 @@ Shore is the new name for Spur. It now has the Sedge look shared by every webhoo
 
 - New icon, colors and fonts. Window titles and headings use the Sedge serif.
 - "Give the dock back to Ubuntu" is now "Revert to system default", and "Back to the default look" is now "Reset the look".
+- The package and command are now called `shore` (it was `spur`). Installing it replaces the old package.
+- If Spur was turned on, Shore turns on in its place the next time you log in.
 - Everything works exactly as before. Your settings and presets carry over.
 
 Install:
 
 ```bash
-sudo apt install ./spur_1.1.0_all.deb
+sudo apt install ./shore_1.1.0_all.deb
 ```

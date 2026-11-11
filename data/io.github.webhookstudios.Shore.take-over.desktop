@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Shore setup
+Comment=Turns Shore on in place of Spur, its old name
+Exec=/usr/lib/shore/shore-take-over
+OnlyShowIn=GNOME;
+NoDisplay=true
+X-GNOME-Autostart-Phase=Applications

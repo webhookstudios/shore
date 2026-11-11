@@ -1,5 +1,5 @@
 #!/usr/bin/gjs -m
-// What the "Shore" entry in the apps menu runs. Spur itself is a GNOME
+// What the "Shore" entry in the apps menu runs. Shore itself is a GNOME
 // Shell extension with no window of its own, so this turns the extension on
 // if needed and opens its preferences. Right after installing, the running
 // shell does not know the extension yet; then it says so instead.
@@ -11,8 +11,8 @@ import Gdk from 'gi://Gdk?version=4.0';
 import GLib from 'gi://GLib';
 import Gtk from 'gi://Gtk?version=4.0';
 
-const UUID = 'spur@webhookstudios.github.io';
-const APP_ID = 'io.github.webhookstudios.Spur';
+const UUID = 'shore@webhookstudios.github.io';
+const APP_ID = 'io.github.webhookstudios.Shore';
 
 function run(...argv) {
     try {
@@ -25,7 +25,7 @@ function run(...argv) {
     }
 }
 
-// Adds Spur to the shell's list of enabled extensions. Unlike
+// Adds Shore to the shell's list of enabled extensions. Unlike
 // `gnome-extensions enable`, this also works before the shell has seen the
 // extension, so it comes on by itself at the next login.
 function markEnabled() {

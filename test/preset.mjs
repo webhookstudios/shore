@@ -2,13 +2,13 @@
 // window does. Usage: gjs -m test/preset.mjs <preset-id> [key=value ...]
 import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
-import {applyValues, sanitize} from '../spur@webhookstudios.github.io/model.js';
-import {BUILTIN_PRESETS} from '../spur@webhookstudios.github.io/presets.js';
+import {applyValues, sanitize} from '../shore@webhookstudios.github.io/model.js';
+import {BUILTIN_PRESETS} from '../shore@webhookstudios.github.io/presets.js';
 
 const dir = GLib.build_filenamev([GLib.path_get_dirname(import.meta.url.replace('file://', '')),
-    '..', 'spur@webhookstudios.github.io', 'schemas']);
+    '..', 'shore@webhookstudios.github.io', 'schemas']);
 const source = Gio.SettingsSchemaSource.new_from_directory(dir, Gio.SettingsSchemaSource.get_default(), false);
-const settings = new Gio.Settings({settings_schema: source.lookup('org.gnome.shell.extensions.spur', false)});
+const settings = new Gio.Settings({settings_schema: source.lookup('org.gnome.shell.extensions.shore', false)});
 
 const [id, ...extra] = ARGV;
 const preset = BUILTIN_PRESETS.find(p => p.id === id);

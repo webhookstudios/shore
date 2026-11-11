@@ -29,21 +29,21 @@ const PIVOT = {
 // Cuts an actor to a rounded rectangle. Clutter can only clip to plain
 // rectangles, so this fades out everything outside the rounded shape.
 const RoundedClip = GObject.registerClass(
-class SpurRoundedClip extends Shell.GLSLEffect {
+class ShoreRoundedClip extends Shell.GLSLEffect {
     _init(params) {
         super._init(params);
-        this._sizeLocation = this.get_uniform_location('spur_size');
-        this._radiusLocation = this.get_uniform_location('spur_radius');
+        this._sizeLocation = this.get_uniform_location('shore_size');
+        this._radiusLocation = this.get_uniform_location('shore_radius');
         this.setShape(1, 1, 0);
     }
 
     vfunc_build_pipeline() {
         this.add_glsl_snippet(Cogl.SnippetHook.FRAGMENT,
-            'uniform vec2 spur_size;\nuniform float spur_radius;\n',
-            'vec2 spur_p = cogl_tex_coord_in[0].st * spur_size;\n' +
-            'vec2 spur_q = abs(spur_p - spur_size * 0.5) - (spur_size * 0.5 - vec2(spur_radius));\n' +
-            'float spur_d = length(max(spur_q, 0.0)) + min(max(spur_q.x, spur_q.y), 0.0) - spur_radius;\n' +
-            'cogl_color_out *= 1.0 - smoothstep(-0.75, 0.75, spur_d);\n',
+            'uniform vec2 shore_size;\nuniform float shore_radius;\n',
+            'vec2 shore_p = cogl_tex_coord_in[0].st * shore_size;\n' +
+            'vec2 shore_q = abs(shore_p - shore_size * 0.5) - (shore_size * 0.5 - vec2(shore_radius));\n' +
+            'float shore_d = length(max(shore_q, 0.0)) + min(max(shore_q.x, shore_q.y), 0.0) - shore_radius;\n' +
+            'cogl_color_out *= 1.0 - smoothstep(-0.75, 0.75, shore_d);\n',
             false);
     }
 
@@ -174,7 +174,7 @@ class DockDecor {
             this._blurWallpaper = wallpaper;
             this._blurMonitor = monitor;
         } catch (e) {
-            console.warn(`Spur: frosted glass is not available: ${e.message}`);
+            console.warn(`Shore: frosted glass is not available: ${e.message}`);
             this._removeBlur();
         }
     }
@@ -318,13 +318,13 @@ class DockDecor {
         if (!baseIcon._dmOriginalCreateIcon)
             baseIcon._dmOriginalCreateIcon = baseIcon.createIcon;
         baseIcon.createIcon = gicon
-            ? size => new St.Icon({gicon, icon_size: size, style_class: 'spur-apps-icon'})
+            ? size => new St.Icon({gicon, icon_size: size, style_class: 'shore-apps-icon'})
             : baseIcon._dmOriginalCreateIcon;
         try {
             baseIcon.setIconSize(baseIcon.iconSize);
             baseIcon._createIconTexture?.(baseIcon.iconSize);
         } catch (e) {
-            console.warn(`Spur: could not redraw the Show Apps icon: ${e.message}`);
+            console.warn(`Shore: could not redraw the Show Apps icon: ${e.message}`);
         }
     }
 
@@ -556,7 +556,7 @@ class DockDecor {
     }
 }
 
-export default class SpurExtension extends Extension {
+export default class ShoreExtension extends Extension {
     enable() {
         this._settings = this.getSettings();
         this._decors = new Map();
@@ -564,13 +564,13 @@ export default class SpurExtension extends Extension {
         this._stats = new Stats(this._settings);
         this._cssSerial = 0;
         this._cssFile = null;
-        this._cssDir = GLib.build_filenamev([GLib.get_user_cache_dir(), 'spur']);
+        this._cssDir = GLib.build_filenamev([GLib.get_user_cache_dir(), 'shore']);
 
         const source = Gio.SettingsSchemaSource.get_default();
         this._dockSettings = source.lookup(DOCK_SCHEMA, true)
             ? new Gio.Settings({schema_id: DOCK_SCHEMA}) : null;
         if (!this._dockSettings)
-            console.warn('Spur: the Ubuntu dock settings were not found, only the stylesheet is applied.');
+            console.warn('Shore: the Ubuntu dock settings were not found, only the stylesheet is applied.');
 
         this._settingsId = this._settings.connect('changed', () => this._queue());
         this._uiId = Main.uiGroup.connect('child-added', (_group, child) => this._adopt(child));
@@ -672,7 +672,7 @@ export default class SpurExtension extends Extension {
             try {
                 setTyped(this._dockSettings, key, value);
             } catch (e) {
-                console.warn(`Spur: could not set ${key}: ${e.message}`);
+                console.warn(`Shore: could not set ${key}: ${e.message}`);
             }
         }
         this._dockSettings.apply();

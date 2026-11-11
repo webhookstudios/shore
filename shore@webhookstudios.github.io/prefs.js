@@ -834,7 +834,7 @@ function hidingPage(window, settings) {
     return page;
 }
 
-export default class SpurPreferences extends ExtensionPreferences {
+export default class ShorePreferences extends ExtensionPreferences {
     fillPreferencesWindow(window) {
         applySedge(window, `${this.path}/sedge`);
         window.set_title('Shore');

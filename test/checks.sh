@@ -28,7 +28,7 @@ for p in floating taskbar taskbar-left glass minimal vertical pill neon topbar; 
 done
 
 # ---- widgets -------------------------------------------------------------------
-DM="org.gnome.shell.extensions.spur"
+DM="org.gnome.shell.extensions.shore"
 set_() { gsettings set "$DM" "$@"; sleep 0.5; }
 echo "##### widgets"
 preset taskbar

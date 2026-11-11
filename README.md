@@ -34,10 +34,10 @@ Shore has only been tested on Ubuntu 26.04 with GNOME Shell 50.1 on Wayland.
 
 ### With the deb package (recommended)
 
-Download `spur_1.1.0_all.deb` from the [latest release](https://github.com/webhookstudios/spur/releases/latest), then install it:
+Download `shore_1.1.0_all.deb` from the [latest release](https://github.com/webhookstudios/shore/releases/latest), then install it:
 
 ```bash
-sudo apt install ./spur_1.1.0_all.deb
+sudo apt install ./shore_1.1.0_all.deb
 ```
 
 Log out and back in, then open **Shore** from the apps menu. The first time, that turns the extension on and opens its settings.
@@ -45,27 +45,27 @@ Log out and back in, then open **Shore** from the apps menu. The first time, tha
 ### As an extension zip, without root
 
 ```bash
-wget https://github.com/webhookstudios/spur/releases/latest/download/spur@webhookstudios.github.io.shell-extension.zip
+wget https://github.com/webhookstudios/shore/releases/latest/download/shore@webhookstudios.github.io.shell-extension.zip
 ```
 
 ```bash
-gnome-extensions install --force spur@webhookstudios.github.io.shell-extension.zip
+gnome-extensions install --force shore@webhookstudios.github.io.shell-extension.zip
 ```
 
 Log out and back in, then:
 
 ```bash
-gnome-extensions enable spur@webhookstudios.github.io
+gnome-extensions enable shore@webhookstudios.github.io
 ```
 
 ### From source
 
 ```bash
-git clone https://github.com/webhookstudios/spur.git
+git clone https://github.com/webhookstudios/shore.git
 ```
 
 ```bash
-./spur/install.sh
+./shore/install.sh
 ```
 
 ## Presets
@@ -90,7 +90,7 @@ Click a preset to apply it. You can save your own look as a preset, export any p
 Open **Shore** from the apps menu, or run:
 
 ```bash
-gnome-extensions prefs spur@webhookstudios.github.io
+gnome-extensions prefs shore@webhookstudios.github.io
 ```
 
 The preview at the top of the window follows every change. The left side shows the whole screen, the right side a close-up of the dock.
@@ -128,23 +128,23 @@ Widgets are off until you turn them on. They sit inside the dock next to the ico
 ## Remove
 
 ```bash
-sudo apt remove spur
+sudo apt remove shore
 ```
 
 Or, if you installed the zip or from source:
 
 ```bash
-gnome-extensions uninstall spur@webhookstudios.github.io
+gnome-extensions uninstall shore@webhookstudios.github.io
 ```
 
 ## Development
 
 ```bash
-ln -s "$PWD/spur@webhookstudios.github.io" ~/.local/share/gnome-shell/extensions/
+ln -s "$PWD/shore@webhookstudios.github.io" ~/.local/share/gnome-shell/extensions/
 ```
 
 ```bash
-glib-compile-schemas spur@webhookstudios.github.io/schemas
+glib-compile-schemas shore@webhookstudios.github.io/schemas
 ```
 
 A Wayland session cannot reload extension code, so each change needs a logout. To try changes without logging out, run the checks in a headless nested shell with a throwaway home folder:
