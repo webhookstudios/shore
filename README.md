@@ -1,8 +1,10 @@
-# Spur
+# Shore
+
+*Formerly Spur. Part of the Sedge family of webhookstudios apps.*
 
 Restyle the Ubuntu dock. Pick a preset, then change anything: where the dock sits, its size, colors, blur, the logo on its corner button, what it shows, and when it hides. You can also hide it completely.
 
-Spur does not replace the dock. It drives the dock that Ubuntu already ships (`ubuntu-dock@ubuntu.com`) and adds styling, magnification, widgets and hiding on top, so pinned apps, window previews and drag and drop keep working as before.
+Shore does not replace the dock. It drives the dock that Ubuntu already ships (`ubuntu-dock@ubuntu.com`) and adds styling, magnification, widgets and hiding on top, so pinned apps, window previews and drag and drop keep working as before.
 
 ![The ten built-in presets](docs/screenshots/presets.png)
 
@@ -26,19 +28,19 @@ The screenshots were taken in a test session on Ubuntu 26.04 with GNOME Shell 50
 - The Ubuntu dock, which is installed and on by default
 - A Wayland session, which is the Ubuntu default
 
-Spur has only been tested on Ubuntu 26.04 with GNOME Shell 50.1 on Wayland.
+Shore has only been tested on Ubuntu 26.04 with GNOME Shell 50.1 on Wayland.
 
 ## Install
 
 ### With the deb package (recommended)
 
-Download `spur_1.0.0_all.deb` from the [latest release](https://github.com/webhookstudios/spur/releases/latest), then install it:
+Download `spur_1.1.0_all.deb` from the [latest release](https://github.com/webhookstudios/spur/releases/latest), then install it:
 
 ```bash
-sudo apt install ./spur_1.0.0_all.deb
+sudo apt install ./spur_1.1.0_all.deb
 ```
 
-Log out and back in, then open **Spur** from the apps menu. The first time, that turns the extension on and opens its settings.
+Log out and back in, then open **Shore** from the apps menu. The first time, that turns the extension on and opens its settings.
 
 ### As an extension zip, without root
 
@@ -85,7 +87,7 @@ Click a preset to apply it. You can save your own look as a preset, export any p
 
 ## Settings
 
-Open **Spur** from the apps menu, or run:
+Open **Shore** from the apps menu, or run:
 
 ```bash
 gnome-extensions prefs spur@webhookstudios.github.io
@@ -95,7 +97,7 @@ The preview at the top of the window follows every change. The left side shows t
 
 | Page | What you can change |
 |---|---|
-| Presets | Apply, save, import and export presets, turn Spur off, restore the stock dock settings |
+| Presets | Apply, save, import and export presets, turn Shore off, restore the stock dock settings |
 | Layout | Screen edge, when the dock shows, stretching, length, icon alignment, icon size, spacing, padding, floating gap, corner radius, one dock per monitor |
 | Look | Background color and opacity, dynamic transparency, frosted glass, border, icon highlight |
 | Icons | Corner button logo, position and color, running-app indicators, Trash, drives, pinned and running apps, window previews, click action, magnification |
@@ -104,7 +106,7 @@ The preview at the top of the window follows every change. The left side shows t
 
 ### Corner button logo
 
-The button that opens the app grid can show your system's default icon, one of eight shapes that come with Spur (hexagon, flower, spark, orbit, peak, diamond, drop, bars), or any SVG or PNG image of your own. The shapes are original drawings made for this project.
+The button that opens the app grid can show your system's default icon, one of eight shapes that come with Shore (hexagon, flower, spark, orbit, peak, diamond, drop, bars), or any SVG or PNG image of your own. The shapes are original drawings made for this project.
 
 ### Widgets
 
@@ -119,7 +121,7 @@ Widgets are off until you turn them on. They sit inside the dock next to the ico
 
 ## Good to know
 
-- Spur writes to the Ubuntu dock's own settings. Before you remove it, use **Give the dock back to Ubuntu** on the Presets page to put those back.
+- Shore writes to the Ubuntu dock's own settings. Before you remove it, use **Revert to system default** on the Presets page to put those back.
 - Frosted glass shows a blurred copy of your wallpaper, so a window that sits under the dock is not blurred through it.
 - Magnified icons grow past the ends of the dock.
 
@@ -156,7 +158,7 @@ Build the release files into `dist/` with `./pack.sh` (extension zip) and `./bui
 | File | Purpose |
 |---|---|
 | `extension.js` | Applies the settings to the dock: stylesheet, blur, logo, magnification, widgets, hiding |
-| `model.js` | Maps Spur's settings onto the Ubuntu dock's settings |
+| `model.js` | Maps Shore's settings onto the Ubuntu dock's settings |
 | `presets.js` | The built-in presets |
 | `css.js` | Builds the dock stylesheet from the settings |
 | `widgets.js` | Reads the clock, system and weather values |

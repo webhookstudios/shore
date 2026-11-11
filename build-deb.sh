@@ -24,6 +24,8 @@ install -d "$EXT" "$STAGE/DEBIAN" "$STAGE/usr/bin" \
 
 install -m 644 "$ROOT/$UUID"/*.js "$ROOT/$UUID/metadata.json" \
     "$ROOT/$UUID/stylesheet.css" "$EXT/"
+cp -r "$ROOT/$UUID/sedge" "$EXT/"
+find "$EXT/sedge" -type f -exec chmod 644 {} +
 install -d "$EXT/media"
 install -m 644 "$ROOT/$UUID/media"/*.svg "$EXT/media/"
 # With no schemas folder of its own, the extension reads its schema from
@@ -37,7 +39,7 @@ chmod 644 "$STAGE/usr/share/applications/$APP_ID.desktop"
 
 cat > "$STAGE/usr/share/doc/spur/copyright" <<EOF
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: Spur
+Upstream-Name: Shore (formerly Spur)
 Source: https://github.com/webhookstudios/spur
 
 Files: *
@@ -45,6 +47,11 @@ Copyright: $(date +%Y) webhookstudios
 License: GPL-2+
  On Debian systems, the full text of the GNU General Public License
  version 2 can be found in /usr/share/common-licenses/GPL-2.
+
+Files: usr/share/gnome-shell/extensions/*/sedge/fonts/*
+Copyright: 2023 The Young Serif Project Authors; 2015 The Public Sans Project Authors
+License: OFL-1.1
+ The full license texts are in the extension's sedge/fonts/ folder.
 EOF
 chmod 644 "$STAGE/usr/share/doc/spur/copyright"
 
@@ -59,12 +66,12 @@ Section: gnome
 Priority: optional
 Homepage: https://github.com/webhookstudios/spur
 Description: Restyle and control the Ubuntu dock
- Spur is a GNOME Shell extension that changes how the Ubuntu dock
+ Shore (formerly Spur) (formerly Shore) is a GNOME Shell extension that changes how the Ubuntu dock
  looks and behaves: ready-made presets, position, size, colors, blur,
  running indicators, a choice of corner button logos, optional clock,
  weather and system readouts, autohide, and hiding the dock completely.
  .
- After installing, log out and back in, then open Spur from the
+ After installing, log out and back in, then open Shore from the
  apps menu.
 EOF
 

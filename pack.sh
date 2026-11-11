@@ -13,6 +13,7 @@ gnome-extensions pack --force --out-dir "$ROOT/dist" \
     --extra-source=preview.js \
     --extra-source=widgets.js \
     --extra-source=media \
+    --extra-source=sedge \
     "$ROOT/$UUID"
 
 echo "Built $ROOT/dist/$UUID.shell-extension.zip"

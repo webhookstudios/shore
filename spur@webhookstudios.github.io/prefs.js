@@ -7,6 +7,7 @@ import Pango from 'gi://Pango';
 import Soup from 'gi://Soup?version=3.0';
 
 import {ExtensionPreferences} from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
+import {applyToWindow as applySedge} from './sedge/sedge.js';
 
 import {DOCK_SCHEMA, applyValues, dockValues, readTyped, sanitize, snapshot} from './model.js';
 import {BUILTIN_PRESETS} from './presets.js';
@@ -303,7 +304,7 @@ function importFile(window, settings) {
             const [, bytes] = file.load_contents(null);
             const data = JSON.parse(new TextDecoder().decode(bytes));
             if (data?.format !== 'spur-preset' || typeof data.values !== 'object')
-                throw new Error('this is not a Spur preset');
+                throw new Error('this is not a Shore preset');
             const values = sanitize(settings, data.values);
             if (Object.keys(values).length === 0)
                 throw new Error('the preset has no usable settings');
@@ -388,7 +389,7 @@ function presetsPage(window, settings) {
         const warn = new Adw.PreferencesGroup({title: 'Ubuntu dock not found'});
         warn.add(new Adw.ActionRow({
             title: 'The Ubuntu dock extension is not installed',
-            subtitle: 'Spur restyles ubuntu-dock@ubuntu.com, so it has nothing to change without it.',
+            subtitle: 'Shore restyles ubuntu-dock@ubuntu.com, so it has nothing to change without it.',
         }));
         page.add(warn);
     }
@@ -453,30 +454,30 @@ function presetsPage(window, settings) {
 
     const reset = new Adw.PreferencesGroup({title: 'Reset'});
     const resetRow = new Adw.ActionRow({
-        title: 'Back to the default look', subtitle: 'Resets every look and layout setting here',
+        title: 'Reset the look', subtitle: 'Resets every look and layout setting here',
         activatable: true,
     });
     resetRow.add_suffix(new Gtk.Image({icon_name: 'edit-undo-symbolic'}));
     resetRow.connect('activated', () => {
         applyValues(settings, {});
         settings.set_string('current-preset', 'ubuntu');
-        reveal(window, 'Back to the default look');
+        reveal(window, 'The look is reset');
     });
     reset.add(resetRow);
 
     const restoreRow = new Adw.ActionRow({
-        title: 'Give the dock back to Ubuntu',
-        subtitle: 'Turns Spur off and resets the Ubuntu dock settings it changed',
+        title: 'Revert to system default',
+        subtitle: 'Turns Shore off and resets the Ubuntu dock settings it changed',
         activatable: true,
     });
     restoreRow.add_suffix(new Gtk.Image({icon_name: 'go-previous-symbolic'}));
     restoreRow.connect('activated', () => {
         const alert = new Adw.AlertDialog({
-            heading: 'Restore the Ubuntu dock settings?',
-            body: 'Spur turns off and the dock goes back to its stock settings. Your presets are kept.',
+            heading: 'Revert to system default?',
+            body: 'Shore turns off and the dock goes back to its stock settings. Your presets are kept.',
         });
         alert.add_response('cancel', 'Cancel');
-        alert.add_response('restore', 'Restore');
+        alert.add_response('restore', 'Revert');
         alert.set_response_appearance('restore', Adw.ResponseAppearance.DESTRUCTIVE);
         alert.choose(window, null, (_a, result) => {
             if (alert.choose_finish(result) !== 'restore')
@@ -799,7 +800,7 @@ function hidingPage(window, settings) {
 
     const all = new Adw.PreferencesGroup({title: 'Hide completely'});
     all.add(switchRow(settings, 'hidden', 'Hide the dock',
-        'Nothing is shown, not even on hover. Open Spur from the app grid (Super, then type Spur) to turn it back on'));
+        'Nothing is shown, not even on hover. Open Shore from the app grid (Super, then type Shore) to turn it back on'));
     all.add(shortcutRow(window, settings, 'toggle-shortcut', 'Shortcut', 'Hides and shows the dock'));
     page.add(all);
 
@@ -835,6 +836,8 @@ function hidingPage(window, settings) {
 
 export default class SpurPreferences extends ExtensionPreferences {
     fillPreferencesWindow(window) {
+        applySedge(window, `${this.path}/sedge`);
+        window.set_title('Shore');
         const settings = this.getSettings();
         window.set_default_size(800, 920);
 

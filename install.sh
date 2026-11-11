@@ -1,5 +1,5 @@
 #!/bin/sh
-# Installs Spur for the current user, without root: the extension, plus an
+# Installs Shore for the current user, without root: the extension, plus an
 # apps-menu entry that opens its settings.
 set -e
 
@@ -32,8 +32,8 @@ sed -e "s|@EXEC@|gjs -m \"$DATA/spur/launcher.js\"|" -e "s|@ICON@|$ICON|" \
 update-desktop-database "$DATA/applications" 2>/dev/null || true
 
 cat <<EOF
-Spur is installed in:
+Shore is installed in:
   $DEST
 
-Log out and back in, then open Spur from the apps menu.
+Log out and back in, then open Shore from the apps menu.
 EOF

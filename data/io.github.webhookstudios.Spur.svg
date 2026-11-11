@@ -1,4 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128"><rect x="8" y="8" width="112" height="112" rx="26" fill="#2b2140"/>
-<rect x="20" y="22" width="88" height="52" rx="8" fill="#5a4a86"/>
-<rect x="20" y="84" width="88" height="24" rx="12" fill="#f4f1fa"/>
-<rect x="29" y="90" width="12" height="12" rx="3.5" fill="#e9623c"/><rect x="47" y="90" width="12" height="12" rx="3.5" fill="#3a86e8"/><rect x="65" y="90" width="12" height="12" rx="3.5" fill="#43c27a"/><rect x="83" y="90" width="12" height="12" rx="3.5" fill="#f2c230"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="face" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e6eee8"/>
+      <stop offset="1" stop-color="#d2dfd6"/>
+    </linearGradient>
+  </defs>
+  <circle cx="64" cy="67" r="54" fill="#1e2b26" fill-opacity=".16"/>
+  <circle cx="64" cy="63" r="54" fill="url(#face)"/>
+  <circle cx="64" cy="63" r="52.5" fill="none" stroke="#247268" stroke-width="3"/>
+  <g transform="translate(64 63) scale(2.55) translate(-12 -12)" fill="none" stroke="#247268"
+     stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 18h18 M5.5 12.5h3.5v3.5H5.5z M10.25 12.5h3.5v3.5h-3.5z M15 12.5h3.5v3.5H15z"/>
+  </g>
+</svg>
