@@ -44,7 +44,7 @@ install -m 644 "$ROOT/data/io.github.webhookstudios.Shore.take-over.desktop" "$S
 
 cat > "$STAGE/usr/share/doc/shore/copyright" <<EOF
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: Shore (formerly Spur)
+Upstream-Name: Shore
 Source: https://github.com/webhookstudios/shore
 
 Files: *
@@ -74,7 +74,7 @@ Section: gnome
 Priority: optional
 Homepage: https://github.com/webhookstudios/shore
 Description: Restyle and control the Ubuntu dock
- Shore (formerly Spur) is a GNOME Shell extension that changes how the Ubuntu dock
+ Shore is a GNOME Shell extension that changes how the Ubuntu dock
  looks and behaves: ready-made presets, position, size, colors, blur,
  running indicators, a choice of corner button logos, optional clock,
  weather and system readouts, autohide, and hiding the dock completely.

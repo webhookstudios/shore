@@ -1,15 +1,11 @@
-# Shore 1.1.0
+# Shore 1.1.1
 
-Shore is the new name for Spur. It now has the Sedge look shared by every webhookstudios app: one set of colors, fonts and icons, in light and dark mode.
+A small cleanup release. Everything else works exactly as before.
 
-- New icon, colors and fonts. Window titles and headings use the Sedge serif.
-- "Give the dock back to Ubuntu" is now "Revert to system default", and "Back to the default look" is now "Reset the look".
-- The package and command are now called `shore` (it was `spur`). Installing it replaces the old package.
-- If Spur was turned on, Shore turns on in its place the next time you log in.
-- Everything works exactly as before. Your settings and presets carry over.
+- The package details in app stores and `apt show` no longer mention an old name.
 
 Install:
 
 ```bash
-sudo apt install ./shore_1.1.0_all.deb
+sudo apt install ./shore_1.1.1_all.deb
 ```

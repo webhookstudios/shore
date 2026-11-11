@@ -1,6 +1,6 @@
 # Shore
 
-*Formerly Spur. Part of the Sedge family of webhookstudios apps.*
+*Part of the Sedge family of webhookstudios apps.*
 
 Restyle the Ubuntu dock. Pick a preset, then change anything: where the dock sits, its size, colors, blur, the logo on its corner button, what it shows, and when it hides. You can also hide it completely.
 
@@ -34,10 +34,10 @@ Shore has only been tested on Ubuntu 26.04 with GNOME Shell 50.1 on Wayland.
 
 ### With the deb package (recommended)
 
-Download `shore_1.1.0_all.deb` from the [latest release](https://github.com/webhookstudios/shore/releases/latest), then install it:
+Download `shore_1.1.1_all.deb` from the [latest release](https://github.com/webhookstudios/shore/releases/latest), then install it:
 
 ```bash
-sudo apt install ./shore_1.1.0_all.deb
+sudo apt install ./shore_1.1.1_all.deb
 ```
 
 Log out and back in, then open **Shore** from the apps menu. The first time, that turns the extension on and opens its settings.
